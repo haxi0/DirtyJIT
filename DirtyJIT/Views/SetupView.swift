@@ -18,9 +18,9 @@ struct SetupView: View {
                 }
                 
                 Section(header: Text("Step 1")) {
-                    Text("Download the attachments that match your device's iOS version from the latest action and put them in a folder. You can find the link below.")
+                    Text("Download the latest .zip file from the link below then extract the contents to a place you like. We will need this later.")
                     Button("Go to Link") {
-                        UIApplication.shared.open(URL(string: "https://github.com/verygenericname/WDBDDISSH/actions")!)
+                        UIApplication.shared.open(URL(string: "https://github.com/haxi0/WDBDDISSH/releases")!)
                     }
                     .buttonStyle(LinkButtonStyle())
                 }
@@ -42,7 +42,7 @@ struct SetupView: View {
                 }
                 
                 Section(header: Text("Step 4")) {
-                    Text("After replacing the file, connect your device to your PC. Run the commands below to mount the image from the first step. Make sure you have ideviceimagemounter installed and you are in the folder where you downloaded those files. If the commands don't work, disconnect and reboot your phone, replace the certificate again, and then try again (Step 3).")
+                    Text("After replacing the file, connect your device to your PC. Run the commands below to mount the image from the first step (The correct developer disk image should match your iOS version, for example the folder that ends with 16.1 matches for iOS versions 16.1, 16.1.1, 16.1.2). Make sure you have ideviceimagemounter installed and you are in the folder where you downloaded those files. If the commands don't work, disconnect and reboot your phone, replace the certificate again, and then try again (Step 3).")
                     VStack {
                         Text("ideviceimagemounter DeveloperDiskImageModified_YourVersionHere.dmg DeveloperDiskImageModified_YourVersionHere.dmg.signature")
                             .font(.custom("Menlo", size: 15))

@@ -46,13 +46,13 @@ struct SettingsView: View {
             }
             
             Section(header: Text("Credits")) {
-                creditView(imageURL: URL(string: "https://avatars.githubusercontent.com/u/87825638?v=4"), name: "Nathan", description: "Big brainer, made the method")
+                creditView(imageURL: URL(string: "https://avatars.githubusercontent.com/u/87825638?v=4"), name: "verygenericname", description: "Known as Nathan, big brainer, made the method")
                 
                 creditView(imageURL: URL(string: "https://avatars.githubusercontent.com/u/85764897?v=4"), name: "haxi0", description: "Made the app, instructions")
                 
                 creditView(imageURL: URL(string: "https://avatars.githubusercontent.com/u/87151697?v=4"), name: "BomberFish", description: "ApplicationManager, app icon")
                 
-                creditView(imageURL: URL(string: "https://avatars.githubusercontent.com/u/52459150?v=4"), name: "sourcelocation & Evyrest", description: "TextField++")
+                creditView(imageURL: URL(string: "https://avatars.githubusercontent.com/u/52459150?v=4"), name: "sourcelocation", description: "TextField++")
             }
         }
         .listStyle(.insetGrouped)
