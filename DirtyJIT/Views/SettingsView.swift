@@ -8,28 +8,21 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding var firstTime: Bool
     let jit = JIT.shared
     
     var body: some View {
         List {
             Section(header: Text("Options")) {
                 Button("Replace iPhoneDebug.pem") {
-                    UIApplication.shared.confirmAlert(title: "Warning", body: "This will replace the default certificate with a custom one to allow mounting the custom DeveloperDiskImage.", onOK: {
+                    UIApplication.shared.confirmAlert(title: "Warning ⚠️", body: "This will replace the default certificate with a custom one to allow mounting the custom DeveloperDiskImage.", onOK: {
                         jit.replaceDebug()
                     }, noCancel: false)
                 }
             }
             
             Section {
-                Button("Show Instructions again") {
-                    firstTime = true
-                }
-                .foregroundColor(.red)
-                .font(.headline.weight(.bold))
-                
                 Button("Reset All") {
-                    UIApplication.shared.confirmAlert(title: "Warning", body: "This means you will reset ALL user data, do you want to continue?", onOK: {
+                    UIApplication.shared.confirmAlert(title: "Warning ⚠️", body: "This means you will reset ALL user data, do you want to continue? (App will crash)", onOK: {
                         UIApplication.shared.alert(title: "Loading", body: "Please wait...", withButton: false)
                         
                         if let bundleID = Bundle.main.bundleIdentifier {

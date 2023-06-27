@@ -33,7 +33,7 @@ struct ContentView: View {
                         }
                     }
                     
-                    NavigationLink(destination: SettingsView(firstTime: $firstTime)) {
+                    NavigationLink(destination: SettingsView()) {
                         Image(systemName: "gear")
                     }
                 }

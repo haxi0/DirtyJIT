@@ -59,7 +59,7 @@ struct SetupView: View {
                 Section(header: Text("Step 5")) {
                     Text("Congratulations! If you haven't encountered any errors, you have finished the setup. Please note that after rebooting, you still need to repeat steps 3 and 4. Otherwise, you are good to go and you can click the dismiss button. If you have any questions or encountered some errors, ask for help in our Discord server.")
                     Button("Go to Discord Server") {
-                        UIApplication.shared.open(URL(string: "https://discord.gg/haxi0")!)
+                        UIApplication.shared.open(URL(string: "https://dsc.gg/haxi0sm")!)
                     }
                     .buttonStyle(LinkButtonStyle())
                 }

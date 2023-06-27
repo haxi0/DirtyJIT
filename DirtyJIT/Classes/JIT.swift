@@ -21,32 +21,26 @@ class JIT {
         }
     }
     
-    func returnPID(exec: String) -> String {
-        var toReturn = ""
+    func getPIDplist(bundleID: String) -> Int? {
+        let plistPath = "/var/mobile/Library/Preferences/com.apple.dasd.dock.persistence.plist"
         
-        do {
-            let string = try String(contentsOfFile: "/var/tmp/ps.log")
-            toReturn = findPID(from: string, process: exec)!
-        } catch {
-            UIApplication.shared.alert(title: "Error", body: "Failed to get PID of executable!", withButton: true)
+        guard let plistData = FileManager.default.contents(atPath: plistPath),
+              let plist = try? PropertyListSerialization.propertyList(from: plistData, options: .mutableContainersAndLeaves, format: nil) as? [String: Any],
+              let applicationProcessIdentifiers = plist["applicationProcessIdentifiers"] as? [String: Int],
+              let key = applicationProcessIdentifiers.keys.first(where: { $0 == bundleID }),
+              let value = applicationProcessIdentifiers[key]
+        else {
+            return nil
         }
         
-        return toReturn
+        return value
     }
     
-    func findPID(from input: String, process exec: String) -> String? {
-        let lines = input.split(separator: "\n")
-        for index in stride(from: lines.count - 1, through: 0, by: -1) {
-            let line = lines[index]
-            if line.contains(exec) {
-                let numbers = line.split(separator: " ").last { substr in
-                    substr.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
-                }
-                return String(numbers ?? "")
-            }
-        }
-        return nil
+    func bundleIDCheck(_ string: String) -> Bool {
+        let dotCount = string.components(separatedBy: ".").count - 1
+        return dotCount > 2
     }
+
     
     func enableJIT(pidApp: String) {
         let pid = pidApp

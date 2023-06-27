@@ -40,19 +40,32 @@ struct AppsView: View {
                 }
             }
             .onTapGesture {
-                let title = "Warning"
-                let message = "We will now try to enable JIT on \(app.name). Make sure the app is opened in the background so we can find its PID and is signed with a free developer certificate!"
+                let title = "We will now try to enable JIT on \(app.name) ⚠️"
+                let message = "Make sure you replaced the iPhoneDebug.pem (in Settings), mounted the developer disk image, the app is opened in the background so we can find its PID, and is signed with a free developer certificate!"
                 let onOK: () -> Void = {
                     UIApplication.shared.alert(title: "Please wait", body: "Enabling JIT...", withButton: false)
                     
-                    callps()
-                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        UIApplication.shared.dismissAlert(animated: true)
-                        jit.enableJIT(pidApp: jit.returnPID(exec: app.name))
+                        UIApplication.shared.dismissAlert(animated: false)
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            appsManager.openApp(app.bundleIdentifier)
+                            // free dev acc checker
+                            if !jit.bundleIDCheck(app.bundleIdentifier) {
+                                UIApplication.shared.confirmAlert(title: "Uh-oh! ⚠️", body: "While enabling JIT on the app there appeared to be less than 3 dots. This could mean that the app was signed not using a free developer certificate (AltStore, Sideloadly), which will lead to a crash and you won't have JIT enabled on the app. Do you want to continue?", onOK: {
+                                    jit.enableJIT(pidApp: String(jit.getPIDplist(bundleID: app.bundleIdentifier)!))
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        appsManager.openApp(app.bundleIdentifier)
+                                    }
+                                }, noCancel: false)
+                                print("AAA OH NO!!!!!!")
+                            } else {
+                                jit.enableJIT(pidApp: String(jit.getPIDplist(bundleID: app.bundleIdentifier)!))
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    appsManager.openApp(app.bundleIdentifier)
+                                }
+                            }
                         }
                     }
                 }
